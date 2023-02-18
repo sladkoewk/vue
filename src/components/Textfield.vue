@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import type { TextfieldModel } from '@/interfaces/inputs';
 import { computed } from 'vue';
-import ClearIcon from '../components/icons/IconClear.vue'
+import ClearIcon from './icons/IconClear.vue'
 
 interface Props {
   modelValue?: TextfieldModel;
+  clearable?: boolean
 }
 
 const props = defineProps<Props>();
@@ -35,27 +36,30 @@ function clear() {
     <div class="textfield__append-icon">
       <slot name="append"></slot>
     </div>
-
-    <ClearIcon v-if="props.modelValue?.clearable" class="textfield__clear-icon" @click="clear">
-
+    <ClearIcon v-if="props.clearable || props.modelValue?.clearable" class="textfield__clear-icon" @click="clear">
     </ClearIcon>
-
   </div>
 </template>
 
 <style>
 .textfield {
   display: flex;
-  border: 2px solid white;
+  border: 2px solid black;
   width: fit-content;
 }
 
 input {
   background: none;
-  color: white
 }
 
 .textfield>* {
   margin-right: 8px;
+  display: flex;
+  align-items: center;
+}
+
+.textfield__clear-icon {
+  width: 24px;
+  height: 24px;
 }
 </style>
