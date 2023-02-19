@@ -11,14 +11,14 @@ const items = ref([
   {
     id: 1,
     label: 'Google',
-    value: 'Google',
+    value: 'Google-id123',
     description: 'Search engine',
     icon: 'mail'
   },
   {
     id: 2,
     label: 'Facebook',
-    value: 'Facebook',
+    value: 'Facebook-id234',
     description: 'Social media',
     icon: 'bluetooth',
     disable: true
@@ -26,19 +26,19 @@ const items = ref([
   {
     id: 3,
     label: 'Twitter',
-    value: 'Twitter',
+    value: 'Twitter-id90',
     description: 'Quick updates',
     icon: 'map'
   },
   {
     label: 'Apple',
-    value: 'Apple',
+    value: 'Apple-id38',
     description: 'iStuff',
     icon: 'golf_course'
   },
   {
     label: 'Oracle',
-    value: 'Oracle',
+    value: 'Oracle-id7382',
     disable: true,
     description: 'Databases',
     icon: 'casino'
@@ -47,6 +47,7 @@ const items = ref([
 
 const filterValue = ref({
   comment: <TextfieldModel>{},
+  note: <TextfieldModel>{ value: "ПРедзаполнение", additionalProp: "unneccesary" },
   company: <SelectModel>{}
 });
 
@@ -72,29 +73,26 @@ function toggleAvailableFields() {
   disabledFields.value = !disabledFields.value;
 }
 
-// Проброс свойств полю через объект и директиву v-bind
+function loadOtherModel() {
+  filterValue.value = { "comment": { "value": "некоторый комментарий" }, "note": { "value": "заметка о радости от кодинга на vue" }, "company": { "value": "Google", "data": { "id": 1, "label": "Google", "value": "Google", "description": "Search engine", "icon": "mail" } } };
+}
+
+// Проброс нескольких свойств полю через объект и директиву v-bind
 const fieldProps = ref(<TextfieldProps>{
   label: "Комментарий",
   clearable: true,
 })
 
-// console.log(input.value.clear)
-// watchEffect(() => {
-//   if (input.value) {
-//     // input.value.focus()
-//     // console.log(input.value.clear())
-//   } else {
-//     // not mounted yet, or the element was unmounted (e.g. by v-if)
-//   }
-// })
-
+const checkedOnlyValueSelect = ref(true)
 
 </script>
 
 <template>
   <h1>Отчёт по курсам</h1>
 
-  <p>TextfieldBasePropsEmits -> {{ JSON.stringify(filterValue, null, 4) }}</p>
+  <p>FilterValue JSON -> {{ JSON.stringify(filterValue, null, 4) }}</p>
+  <hr>
+  <br>
   <Textfield :disable="disabledFields" ref="input" v-bind="fieldProps" v-model="filterValue.comment">
     <template #prepend>
       <CommunityIcon />
@@ -103,12 +101,24 @@ const fieldProps = ref(<TextfieldProps>{
       <DocumentationIcon />
     </template>
   </Textfield>
-  <p>TextfieldBasePropsEmits -> {{ filterValue.comment.value }}</p>
-  <Textfield :disable="disabledFields" :clearable="true" v-model="filterValue.comment">
+  <br>
+  <Textfield :label="'Заметка'" :disable="disabledFields" :clearable="true" v-model="filterValue.note">
   </Textfield>
+  <br>
   <button @click="toUpperCase">Перевести введенный текст в верхний регистр</button>
-  <button @click="clearInputsTimeout">Удалить введенный текст через секунду</button>
-  <Select :disable="disabledFields" :options="items" v-model="filterValue.company"></Select>
+  <br>
+  <button @click="clearInputsTimeout">Удалить введенный текст поля комментария через секунду</button>
+  <br>
+  <br>
+  <hr>
+  <br>
+  <Select :only-value="checkedOnlyValueSelect" :disable="disabledFields" :options="items" v-model="filterValue.company"></Select>
+  <br>
+  <input type="checkbox" id="checkbox" v-model="checkedOnlyValueSelect">
+  <label for="checkbox">Только значение value в модели select: {{ checkedOnlyValueSelect }}</label>
+  <br>
   <button @click="toggleAvailableFields">Переключить доступность полей</button>
+  <br>
+  <button @click="loadOtherModel">Загрузка другой модели из JSON</button>
 </template >
       

@@ -12,17 +12,19 @@ export interface SelectProps {
   loading?: boolean;
   disable?: boolean;
   readonly?: boolean;
-  options?: OptionProps[]
+  options?: OptionProps[];
+  onlyValue?: boolean;
 }
 
 export interface OptionProps {
   label: string;
-  disable: boolean;
+  value: any;
+  disable?: boolean;
 }
 
 export interface SelectModel {
   value?: any;
-  id?: string | number;
+  label?: string;
 }
 
 export interface SelectMethods {
@@ -35,17 +37,19 @@ const emit = defineEmits<{
 
 const props = withDefaults(defineProps<SelectProps>(), {
   clearable: true,
+  onlyValue: true
 });
 
 function clear() {
-  emit('update:modelValue', (<SelectModel>{ ...props.modelValue, value: undefined, id: undefined }))
+  emit('update:modelValue', (<SelectModel>{ ...props.modelValue, value: undefined, data: undefined }))
 }
 
 const computedSelectValue = computed({
-  get: (): SelectModel =>
-    props.modelValue?.value,
+  get: (): SelectModel => props.modelValue || {},
   set: (newValue: SelectModel) =>
-    emit('update:modelValue', (<SelectModel>{ ...props.modelValue, value: newValue, id: newValue.id }))
+    props.onlyValue ?
+      emit('update:modelValue', (<SelectModel>{ value: newValue.value, label: newValue.label })) :
+      emit('update:modelValue', (<SelectModel>{ ...newValue }))
 });
 
 </script>
@@ -55,6 +59,7 @@ const computedSelectValue = computed({
     <div class="select__prepend-icon">
       <slot name="prepend"></slot>
     </div>
+    <input v-model="computedSelectValue.label" />
     <select v-model="computedSelectValue" :readonly="props.readonly" :disabled="props.disable">
       <option v-for="option in props.options" :value="option" :disabled="option.disable">
         {{ option.label }}

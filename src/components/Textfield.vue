@@ -44,7 +44,7 @@ const computedTextValue = computed({
     return props.modelValue || {};
   },
   set: (newValue: TextfieldModel) =>
-    emit('update:modelValue', (<TextfieldModel>{ ...props.modelValue, value: newValue.value }))
+    emit('update:modelValue', (<TextfieldModel>{ ...newValue }))
 });
 
 function clear() {
