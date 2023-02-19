@@ -45,10 +45,10 @@ function clear() {
 }
 
 const computedSelectValue = computed({
-  get: (): SelectModel => props.modelValue || {},
+  get: (): SelectModel => ({ ...props.options?.find(option => option.value === props.modelValue?.value) }),
   set: (newValue: SelectModel) =>
     props.onlyValue ?
-      emit('update:modelValue', (<SelectModel>{ value: newValue.value, label: newValue.label })) :
+      emit('update:modelValue', (<SelectModel>{ value: newValue.value })) :
       emit('update:modelValue', (<SelectModel>{ ...newValue }))
 });
 
@@ -59,7 +59,8 @@ const computedSelectValue = computed({
     <div class="select__prepend-icon">
       <slot name="prepend"></slot>
     </div>
-    <input v-model="computedSelectValue.label" />
+    <span>Значение: {{ computedSelectValue.value }}</span>
+    <span>Текст: {{ computedSelectValue.label }}</span>
     <select v-model="computedSelectValue" :readonly="props.readonly" :disabled="props.disable">
       <option v-for="option in props.options" :value="option" :disabled="option.disable">
         {{ option.label }}
