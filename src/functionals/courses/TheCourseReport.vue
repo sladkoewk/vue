@@ -7,7 +7,7 @@ import DocumentationIcon from '../../components/icons/IconDocumentation.vue'
 import type { TextfieldMethods, TextfieldModel, TextfieldProps } from '../../components/Textfield.vue';
 import type { SelectModel } from '../../components/Select.vue';
 
-const items = ref([
+const itemsForSelect = ref([
   {
     id: 1,
     label: 'Google',
@@ -47,7 +47,7 @@ const items = ref([
 
 const filterValue = ref({
   comment: <TextfieldModel>{},
-  note: <TextfieldModel>{ value: "ПРедзаполнение", additionalProp: "unneccesary" },
+  note: <TextfieldModel>{ value: "Предзаполнение",/* additionalProp: "unneccesary"*/ },
   company: <SelectModel>{}
 });
 
@@ -112,7 +112,8 @@ const checkedOnlyValueSelect = ref(true)
   <br>
   <hr>
   <br>
-  <Select :only-value="checkedOnlyValueSelect" :disable="disabledFields" :options="items" v-model="filterValue.company"></Select>
+  <Select :only-value="checkedOnlyValueSelect" :disable="disabledFields" :options="itemsForSelect"
+    v-model="filterValue.company"></Select>
   <br>
   <input type="checkbox" id="checkbox" v-model="checkedOnlyValueSelect">
   <label for="checkbox">Только значение value в модели select: {{ checkedOnlyValueSelect }}</label>
