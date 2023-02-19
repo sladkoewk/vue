@@ -17,6 +17,7 @@ export interface SelectProps {
 
 export interface OptionProps {
   label: string;
+  disable: boolean;
 }
 
 export interface SelectModel {
@@ -54,8 +55,8 @@ const computedSelectValue = computed({
     <div class="select__prepend-icon">
       <slot name="prepend"></slot>
     </div>
-    <select v-model="computedSelectValue">
-      <option v-for="option in props.options" :value="option">
+    <select v-model="computedSelectValue" :readonly="props.readonly" :disabled="props.disable">
+      <option v-for="option in props.options" :value="option" :disabled="option.disable">
         {{ option.label }}
       </option>
     </select>

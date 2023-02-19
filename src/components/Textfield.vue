@@ -37,13 +37,18 @@ const emit = defineEmits<{
 }>();
 
 const computedTextValue = computed({
-  get: (): TextfieldModel => props.modelValue || {},
+  get: (): TextfieldModel => {
+    if (props?.modelValue?.value === "") {
+      props.modelValue.value = undefined;
+    }
+    return props.modelValue || {};
+  },
   set: (newValue: TextfieldModel) =>
     emit('update:modelValue', (<TextfieldModel>{ ...props.modelValue, value: newValue.value }))
 });
 
 function clear() {
-  emit('update:modelValue', (<TextfieldModel>{ ...props.modelValue, value: "" }))
+  emit('update:modelValue', (<TextfieldModel>{ ...props.modelValue, value: undefined }))
 }
 
 defineExpose<TextfieldMethods>({

@@ -20,7 +20,8 @@ const items = ref([
     label: 'Facebook',
     value: 'Facebook',
     description: 'Social media',
-    icon: 'bluetooth'
+    icon: 'bluetooth',
+    disable: true
   },
   {
     id: 3,
@@ -49,6 +50,7 @@ const filterValue = ref({
   company: <SelectModel>{}
 });
 
+const disabledFields = ref(false);
 
 const input = ref<TextfieldMethods | null>(null)
 
@@ -66,13 +68,15 @@ function clearInputsTimeout() {
   setTimeout(() => input.value?.clear(), 1000)
 }
 
+function toggleAvailableFields() {
+  disabledFields.value = !disabledFields.value;
+}
+
 // Проброс свойств полю через объект и директиву v-bind
-const fieldProps = <TextfieldProps>{
+const fieldProps = ref(<TextfieldProps>{
   label: "Комментарий",
   clearable: true,
-  readonly: true,
-  disable: true
-}
+})
 
 // console.log(input.value.clear)
 // watchEffect(() => {
@@ -91,7 +95,7 @@ const fieldProps = <TextfieldProps>{
   <h1>Отчёт по курсам</h1>
 
   <p>TextfieldBasePropsEmits -> {{ JSON.stringify(filterValue, null, 4) }}</p>
-  <Textfield ref="input" v-bind="fieldProps" v-model="filterValue.comment">
+  <Textfield :disable="disabledFields" ref="input" v-bind="fieldProps" v-model="filterValue.comment">
     <template #prepend>
       <CommunityIcon />
     </template>
@@ -100,10 +104,11 @@ const fieldProps = <TextfieldProps>{
     </template>
   </Textfield>
   <p>TextfieldBasePropsEmits -> {{ filterValue.comment.value }}</p>
-  <Textfield :clearable="true" v-model="filterValue.comment">
+  <Textfield :disable="disabledFields" :clearable="true" v-model="filterValue.comment">
   </Textfield>
   <button @click="toUpperCase">Перевести введенный текст в верхний регистр</button>
   <button @click="clearInputsTimeout">Удалить введенный текст через секунду</button>
-  <Select :options="items" v-model="filterValue.company"></Select>
+  <Select :disable="disabledFields" :options="items" v-model="filterValue.company"></Select>
+  <button @click="toggleAvailableFields">Переключить доступность полей</button>
 </template >
       
