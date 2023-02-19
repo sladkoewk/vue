@@ -1,14 +1,36 @@
 <script setup lang="ts">
-import type { TextfieldModel } from '@/interfaces/inputs';
 import { computed } from 'vue';
 import ClearIcon from './icons/IconClear.vue'
 
-interface Props {
+export interface TextfieldProps {
+  label?: string;
+  clearIcon?: boolean;
+  errorMessage?: string;
+  hint?: string;
+  loading?: boolean;
+  disable?: boolean;
+  readonly?: boolean;
+  clearable?: boolean;
   modelValue?: TextfieldModel;
-  clearable?: boolean
+  validation?: Function;
+  prefix?: string;
+  suffix?: string;
+  counter?: boolean;
+  rules?: Function[];
+  maxLength?: string;
+  type?: "text" | "password";
+}
+export interface TextfieldModel {
+  value?: string;
 }
 
-const props = defineProps<Props>();
+export interface TextfieldMethods {
+  clear: Function;
+}
+
+const props = withDefaults(defineProps<TextfieldProps>(), {
+  clearable: true,
+});
 
 const emit = defineEmits<{
   (event: 'update:modelValue', payload: TextfieldModel): void;
@@ -17,26 +39,30 @@ const emit = defineEmits<{
 const computedTextValue = computed({
   get: (): TextfieldModel => props.modelValue || {},
   set: (newValue: TextfieldModel) =>
-    emit('update:modelValue', ({ ...props.modelValue, textValue: newValue.textValue }))
+    emit('update:modelValue', (<TextfieldModel>{ ...props.modelValue, value: newValue.value }))
 });
 
 function clear() {
-  emit('update:modelValue', ({ ...props.modelValue, textValue: "" }))
+  emit('update:modelValue', (<TextfieldModel>{ ...props.modelValue, value: "" }))
 }
+
+defineExpose<TextfieldMethods>({
+  clear,
+});
 
 </script>
 
 <template>
   <div class="textfield">
-    <label>{{ props.modelValue?.label }}</label>
+    <span>{{ props.label }}</span>
     <div class="textfield__prepend-icon">
       <slot name="prepend"></slot>
     </div>
-    <input v-model="computedTextValue.textValue" />
+    <input v-model="computedTextValue.value" :readonly="props.readonly" :disabled="props.disable" />
     <div class="textfield__append-icon">
       <slot name="append"></slot>
     </div>
-    <ClearIcon v-if="props.clearable || props.modelValue?.clearable" class="textfield__clear-icon" @click="clear">
+    <ClearIcon v-if="props.clearable" class="textfield__clear-icon" @click="clear">
     </ClearIcon>
   </div>
 </template>

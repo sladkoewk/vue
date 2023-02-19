@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "../views/HomeView.vue";
 import CourseReportView from "../views/CourseReportView.vue";
+import CompetenceListView from "../views/CompetenceListView.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -18,7 +19,7 @@ const router = createRouter({
     {
       path: "/competence-list",
       name: "competence-list",
-      component: CourseReportView,
+      component: CompetenceListView,
     },
     {
       path: "/about",
