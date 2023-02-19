@@ -37,7 +37,7 @@ const emit = defineEmits<{
 
 const props = withDefaults(defineProps<SelectProps>(), {
   clearable: true,
-  onlyValue: true
+  onlyValue: true,
 });
 
 function clear() {

@@ -29,7 +29,7 @@ export interface TextfieldMethods {
 }
 
 const props = withDefaults(defineProps<TextfieldProps>(), {
-  clearable: true,
+  // clearable: true,
 });
 
 const emit = defineEmits<{

@@ -74,13 +74,13 @@ function toggleAvailableFields() {
 }
 
 function loadOtherModel() {
-  filterValue.value = { "comment": { "value": "некоторый комментарий" }, "note": { "value": "заметка о радости от кодинга на vue" }, "company": { "value": "Google", "data": { "id": 1, "label": "Google", "value": "Google", "description": "Search engine", "icon": "mail" } } };
+  filterValue.value = { "comment": { "value": "некоторый комментарий" }, "note": { "value": "заметка о радости от кодинга на vue" }, "company": { "id": 3, "label": "Twitter", "value": "Twitter-id90", "description": "Quick updates", "icon": "map" } };
 }
 
 // Проброс нескольких свойств полю через объект и директиву v-bind
 const fieldProps = ref(<TextfieldProps>{
   label: "Комментарий",
-  clearable: true,
+  // clearable: true,
 })
 
 const checkedOnlyValueSelect = ref(true)
