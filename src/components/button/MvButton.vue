@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { Size, TextColor, BackgroundColor } from "../../styles/styles";
 import MvIcon from '@/components/icon/MvIcon.vue';
-import { computed, reactive, ref, watchEffect } from "vue";
+import { computed, ref } from "vue";
 import MvSpinner from "../spinner/MvSpinner.vue";
 import { SpinnerType } from "../spinner/MvSpinnerType";
 
