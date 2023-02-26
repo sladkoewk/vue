@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import MvInput, { type InputModel } from "../../components/input/MvInput.vue"
 import MvButton from "../../components/button/MvButton.vue"
-import { ref, watchEffect } from "vue";
+import { ref } from "vue";
 import type { Validators } from "@/tools/validators";
 
 /**
@@ -11,7 +11,6 @@ const exporting = ref(false);
 
 async function exportReport() {
   exporting.value = true;
-  // TODO: validate
   setTimeout(() => {
     exporting.value = false;
   }, 5000)
@@ -19,7 +18,8 @@ async function exportReport() {
 
 const filterValue = ref({
   comment: <InputModel>{ value: "" }, //note: необязательная строка, служит для облегчения чтения
-  email: <InputModel>{ value: "" } //note: необязательная строка, служит для облегчения чтения
+  email: <InputModel>{ value: "" }, //note: необязательная строка, служит для облегчения чтения
+  subdivisions: <SelectModel>{ value: [] } //note: необязательная строка, служит для облегчения чтения
 })
 
 const validate = ref({
@@ -51,5 +51,6 @@ const emailRules = [
     v-model="filterValue.email">
   </MvInput>
   <MvButton @click="exportReport" :loading="exporting" :disable="exporting" :label="'Экспорт отчета'"
-    :icon-right="'save'"></MvButton>
+    :icon-right="'save'">
+  </MvButton>
 </template>

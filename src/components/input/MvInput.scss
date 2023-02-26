@@ -1,4 +1,11 @@
+.mv-input {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid black;
+  margin: 8px 0;
 
-.mv-input__error-message {
-  
+  & > .mv-input__error-message {
+    color: red;
+  }
 }
+
