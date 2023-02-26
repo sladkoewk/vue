@@ -9,3 +9,7 @@ export enum TextColor {
   ACCENT = "mgnt_text_color_accent",
   SECONDARY = "mgnt_text_color_secondary",
 }
+
+export enum BackgroundColor {
+  ACCENT = "mgnt_background_color_accent",
+}

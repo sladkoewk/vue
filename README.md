@@ -1,12 +1,12 @@
 # Magnum
 
 - [ ] Components
-  - [ ] Autocomplete
-  - [ ] Button
   - [x] Icon
+  - [x] Button
+  - [ ] Spinner
   - [ ] Input
   - [ ] Select
-  - [ ] Spinner
+  - [ ] Autocomplete
   - [ ] Table
 - [ ] Report page
 

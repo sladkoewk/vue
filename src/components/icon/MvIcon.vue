@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Size, TextColor } from "../../styles/styles"
+import { Size, TextColor } from "../../styles/styles";
 
 export interface IconProps {
   size?: Size;
@@ -15,8 +15,8 @@ const props = withDefaults(defineProps<IconProps>(), {
 
 
 <template>
-  <span class="material-symbols-outlined" :class="[
+  <i class="material-symbols-outlined" :class="[
     props.size
     , props.color]
-  ">{{ name }}</span>
+  ">{{ name }}</i>
 </template>
