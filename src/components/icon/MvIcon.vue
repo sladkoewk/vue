@@ -13,7 +13,6 @@ const props = withDefaults(defineProps<IconProps>(), {
 });
 </script>
 
-
 <template>
   <i class="material-symbols-outlined" :class="[
     props.size

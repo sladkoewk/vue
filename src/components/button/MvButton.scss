@@ -1,1 +1,21 @@
 
+.mv-button {
+  display: flex;
+  border: 1px solid grey;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  & > * {
+    margin-left: 4px;
+    margin-right: 4px;
+  }
+  & .mv-button--spinner {
+    height: 12px;
+    width: 12px;
+  }
+
+  &.mv-button--disable {
+    background-color: #fefefe;
+    color: grey;
+  }
+}

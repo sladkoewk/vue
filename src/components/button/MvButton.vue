@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { Size, TextColor, BackgroundColor } from "../../styles/styles";
 import MvIcon from '@/components/icon/MvIcon.vue';
-import { reactive } from "vue";
+import { computed, reactive, ref, watchEffect } from "vue";
 import MvSpinner from "../spinner/MvSpinner.vue";
+import { SpinnerType } from "../spinner/MvSpinnerType";
 
 export interface ButtonProps {
   /**
@@ -50,35 +51,42 @@ const props = withDefaults(defineProps<ButtonProps>(), {
   color: TextColor.ACCENT,
 });
 
-const classArray = reactive([props.color, props.backgroundColor, props.size]);
-const classObject = reactive({
-  'no-wrap': props.noWrap,
-  'stretch': props.stretch,
-  'round': props.round
-});
+const classArray = ref(["mv-button", props.color, props.backgroundColor, props.size]);
+
+const classObject = computed(() => ({
+  'mv-button--no-wrap': props.noWrap,
+  'mv-button--stretch': props.stretch,
+  'mv-button--round': props.round,
+  'mv-button--disable': props.disable,
+}))
 
 const isLink = (props: ButtonProps) => !!props.href;
+
 </script>
 
 <template>
   <template v-if="isLink(props)">
     <a :href="props.href" :target="props.target" :class="[classArray, classObject]">
       <MvIcon v-if="props.iconLeft" :name="props.iconLeft"></MvIcon>
-      <slot>
-        {{ props.label }}
-      </slot>
+      <span>
+        <slot>
+          {{ props.label }}
+        </slot>
+      </span>
       <MvIcon v-if="props.iconRight" :name="props.iconRight"></MvIcon>
-      <MvSpinner v-if="props.loading"></MvSpinner>
+      <MvSpinner :type="SpinnerType.BOUNCE" :class="'mv-button--spinner'" v-if="props.loading"></MvSpinner>
     </a>
   </template>
   <template v-else>
     <button :class="[classArray, classObject]">
       <MvIcon v-if="props.iconLeft" :name="props.iconLeft"></MvIcon>
-      <slot>
-        {{ props.label }}
-      </slot>
+      <span>
+        <slot>
+          {{ props.label }}
+        </slot>
+      </span>
       <MvIcon v-if="props.iconRight" :name="props.iconRight"></MvIcon>
-      <MvSpinner v-if="props.loading"></MvSpinner>
+      <MvSpinner :type="SpinnerType.BOUNCE" :class="'mv-button--spinner'" v-if="props.loading"></MvSpinner>
     </button>
   </template>
 </template>
