@@ -3,7 +3,7 @@
 - [ ] Components
   - [x] Icon
   - [x] Button
-  - [ ] Spinner
+  - [x] Spinner
   - [ ] Input
   - [ ] Select
   - [ ] Autocomplete
